@@ -1,1 +1,27 @@
-a
+#!/usr/bin/python3
+# SPDX-FileCopyrightText: 2024 kurisaki moe
+# SPDX-License-Identifier: GPL-3.0-only
+import sys
+from decimal import Decimal, getcontext
+
+def display_pi(digits):
+    if digits < 1:
+        raise ValueError("桁数は1以上で指定してください。")
+    # 計算精度を指定された桁数に設定
+    getcontext().prec = digits + 2  # 丸め誤差を防ぐために余分に計算
+    pi = Decimal(0)
+    k = 0
+    # 円周率をライプニッツ級数の一種（マチンの公式）で計算
+    while k < digits * 100000:  # 高精度のため十分多くループする
+        pi += (Decimal(-1)**k) / (Decimal(2) * k + Decimal(1))
+        k += 1
+    pi *= (Decimal(4))
+    # 指定された桁数で丸めて表示
+    return str(pi)[:digits + 2]  # 整数部の "3." を含めた桁数
+
+# 使用例
+try:
+    digits = int(input("円周率を何桁表示しますか？: "))
+    print(display_pi(digits))
+except ValueError as e:
+    print(e)
