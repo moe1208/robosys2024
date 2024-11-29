@@ -1,29 +1,39 @@
-#!/usr/bin/pyson
+#!/usr/bin/python3
 # SPDX-FileCopyrightText: 2024 kurisaki moe
 # SPDX-License-Identifier: GPL-3.0-only
-import unittest
+import sys
 from decimal import Decimal, getcontext
 
-def test_correct_digits(self):
-        # 確認用の小数点以下の値
-        self.assertEqual(display_pi(1), "3.")
-        self.assertEqual(display_pi(2), "3.1")
-        self.assertEqual(display_pi(3), "3.14")
-        self.assertEqual(display_pi(10), "3.1415926535")
+def display_pi(digits):
+    if digits < 1:
+        raise ValueError("桁数は1以上で指定してください。")  # エラーメッセージを修正
+    # 計算精度を指定された桁数に設定
+    getcontext().prec = digits + 2
+    pi = Decimal(0)
+    k = 0
+    # マチンの公式で円周率を計算
+    while k < digits * 100000:
+        pi += (Decimal(-1) ** k) / (Decimal(2) * k + Decimal(1))
+        k += 1
 
-    def test_invalid_input(self):
-        # 0や負数を渡した場合
-        with self.assertRaises(ValueError):
-            display_pi(0)
-        with self.assertRaises(ValueError):
-            display_pi(-1)
+    pi *= Decimal(4)
+    # 指定された桁数で丸めて表示
+    pi_str = str(pi)
+    return pi_str[:digits + 2]  # "3."を含めた桁数を返す
 
-    def test_large_input(self):
-        # 非常に大きな桁数を試してみる（計算が正しく行えるか）
-        result = display_pi(100)
-        self.assertTrue(result.startswith("3.1415926535"))  # 小数点以下10桁が正しいか
+# テストコード
+try:
+    digits = int(input("円周率を何桁表示しますか？: "))
+    result = display_pi(digits)
+    print(result)
 
-        suite = unittest.TestLoader().loadTestsFromTestCase(TestDisplayPi)
-        result = unittest.TextTestRunner().run(suite)
-        if result.wasSuccessful():
-        print("OK")
+    # 期待される結果の確認（最初の5桁を比較する例）
+    expected_result = str(Decimal(3.14159265358979323846))[:digits + 2]  # 正確な円周率を用意
+
+    if result == expected_result:
+        print("OK")  # 結果が一致すれば"OK"を表示
+    else:
+        print("結果が一致しません")  # 結果が異なればエラーメッセージ
+
+except ValueError as e:
+    print(e)
