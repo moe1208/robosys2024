@@ -12,7 +12,6 @@
 
 
 ## インストール方法
-
 以下の手順でプロジェクトをローカル環境にインストールしてください。
 
 リポジトリをクローン
@@ -20,6 +19,10 @@ git clone https://github.com/moe1208/robosys2024.git
 
 ディレクトリに移動
 cd robosys2024/Kadai/
+
+
+##依存関係をインストール
+pip install -r requirements.txt```
 
 
 ## 使い方
