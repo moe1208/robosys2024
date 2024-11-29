@@ -1,0 +1,59 @@
+#!/usr/bin/python3
+# SPDX-FileCopyrightText: 2024 kurisaki moe
+# SPDX-License-Identifier: GPL-3.0-only
+
+import unittest
+from decimal import Decimal, getcontext
+
+# テスト対象の関数
+def display_pi(digits):
+    if digits < 1:
+        raise ValueError("桁数は1以上で指定してください。")
+    # 計算精度を指定された桁数に設定
+    getcontext().prec = digits + 5  # 丸め誤差を防ぐために余分に計算
+    pi = Decimal(0)
+    k = 0
+    # 円周率をライプニッツ級数の一種（マチンの公式）で計算
+    while k < digits * 100000:  # 高精度のため十分多くループする
+        pi += (Decimal(-1) ** k) / (Decimal(2) * k + Decimal(1))
+        k += 1
+    pi *= Decimal(4)
+
+    # 桁数に応じて結果を丸める
+    format_str = "1." + "0" * (digits - 1)  # 丸め用フォーマット生成
+    return str(pi.quantize(Decimal(format_str)))
+
+    # 1桁の場合は特別に "3." を返す
+    if digits == 1:
+        return "3."
+
+    # 指定された桁数で丸めて表示
+    return str(pi)[:digits + 2]  # 整数部 "3." を含めた桁数
+
+# テストクラス
+class TestDisplayPi(unittest.TestCase):
+    def test_correct_digits(self):
+        # 確認用の小数点以下の値
+        self.assertEqual(display_pi(1), "3.")
+        self.assertEqual(display_pi(2), "3.1")
+        self.assertEqual(display_pi(3), "3.14")
+        self.assertEqual(display_pi(10), "3.1415926535")
+
+    def test_invalid_input(self):
+        # 0や負数を渡した場合
+        with self.assertRaises(ValueError):
+            display_pi(0)
+        with self.assertRaises(ValueError):
+            display_pi(-1)
+
+    def test_large_input(self):
+        # 非常に大きな桁数を試してみる（計算が正しく行えるか）
+        result = display_pi(100)
+        self.assertTrue(result.startswith("3.1415926535"))  # 小数点以下10桁が正しいか
+
+if __name__ == "__main__":
+    # テストの実行
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestDisplayPi)
+    result = unittest.TextTestRunner().run(suite)
+    if result.wasSuccessful():
+        print("すべてのテストに成功しました！OK")
