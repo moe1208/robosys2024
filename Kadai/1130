@@ -5,7 +5,7 @@ import sys
 from decimal import Decimal, getcontext
 
 def arctan(x, terms):
-    """逆正接関数arctan(x)をテイラー級数で計算"""
+    "逆正接関数arctan(x)をテイラー級数で計算"
     result = Decimal(0)
     power = x  # 初期のxの値
     for n in range(terms):
@@ -16,11 +16,11 @@ def arctan(x, terms):
 
 def display_pi(digits):
     if digits < 1:
-        raise ValueError("桁数は1以上で指定してください。")
+        raise ValueError("桁数は1以上で指定")
     
     # 計算精度を指定された桁数に設定
     getcontext().prec = digits + 2  # 丸め誤差を防ぐために余分に計算
-    terms = digits * 10  # 計算の精度を決めるための項数（適宜調整可能）
+    terms = digits * 10  # 計算の精度を決めるための項数（調整可能）
     
     # マチンの公式を使用して円周率を計算
     arctan_1_5 = arctan(Decimal(1) / 5, terms)

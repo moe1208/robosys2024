@@ -6,7 +6,7 @@ from decimal import Decimal, getcontext
 
 def display_pi(digits):
     if digits < 1:
-        raise ValueError("桁数は1以上で指定してください。")  # エラーメッセージを修正
+        raise ValueError("桁数は1以上で指定")  # エラーメッセージを修正
     # 計算精度を指定された桁数に設定
     getcontext().prec = digits + 2
     pi = Decimal(0)
@@ -19,7 +19,7 @@ def display_pi(digits):
     pi *= Decimal(4)
     # 指定された桁数で丸めて表示
     pi_str = str(pi)
-    return pi_str[:digits + 2]  # "3."を含めた桁数を返す
+    return pi_str[:digits + 2]  # "3."を含めた桁数
 
 # テストコード
 try:
@@ -31,9 +31,9 @@ try:
     expected_result = str(Decimal(3.14159265358979323846))[:digits + 2]  # 正確な円周率を用意
 
     if result == expected_result:
-        print("OK")  # 結果が一致すれば"OK"を表示
+        print("OK")  # 結果が合っていれば"OK"を表示
     else:
-        print("結果が一致しません")  # 結果が異なればエラーメッセージ
+        print("結果が一致しません")  # 結果が誤っていれば"結果が一致しません"を表示
 
 except ValueError as e:
     print(e)
