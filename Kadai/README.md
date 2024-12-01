@@ -24,7 +24,7 @@ $./Pi
 
 
 ## 必要なソフトウェア
-- Pyson
+- Python
  - テスト済みバージョン: 3.7 ~ 3.10
 
 
@@ -36,14 +36,3 @@ $./Pi
 ## ライセンス
 このソフトウェアパッケージは、３条項BSDライセンスの下、再頒布および使用が許可されます。
 ©2024 moe kurisaki
-
-
-## 貢献
-
-貢献方法は以下の通りです。  
-
-1.フォークする。  
-2.新しいブランチを作成する。(git checkout -b feature/YourFeature)  
-3.コードをコミットする。(git commit -m 'Add some feature')  
-4.プッシュする。(git push origin feature/YourFeature)  
-5.プルリクエストを作成する。  
