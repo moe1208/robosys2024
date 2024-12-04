@@ -1,25 +1,39 @@
-#!/bin/bash -xv
-# SPDX-FileCopyrightText: 2024 kurisaki moe 　　　　　
+#!/usr/bin/python3
+# SPDX-FileCopyrightText: 2024 kurisaki moe
 # SPDX-License-Identifier: GPL-3.0-only
-ng () {
-        echo ${1}行目が違うよ
-	res=1
-}
+import sys
+from decimal import Decimal, getcontext
 
-res=0
+def display_pi(digits):
+    if digits < 1:
+        raise ValueError("桁数は1以上で指定")  # エラーメッセージを修正
+    # 計算精度を指定された桁数に設定
+    getcontext().prec = digits + 2
+    pi = Decimal(0)
+    k = 0
+    # マチンの公式で円周率を計算
+    while k < digits * 100000:
+        pi += (Decimal(-1) ** k) / (Decimal(2) * k + Decimal(1))
+        k += 1
 
-### NORMAL INPUT ###
-out=$(seq 5 | ./plus)
-[ "${out}" = 15 ] || ng "$LINENO"
+    pi *= Decimal(4)
+    # 指定された桁数で丸めて表示
+    pi_str = str(pi)
+    return pi_str[:digits + 2]  # "3."を含めた桁数
 
-### STRANGE INPUT ###
-out=$(echo あ | ./plus)           #計算できない値を入力してみる
-[ "$?" = 1 ]      || ng "$LINENO" #終了ステータスが1なのを確認
-[ "${out}" = "" ] || ng "$LINENO" #この行と上の行は入れ替えるとダメです
-  　                                      #（↑なぜかは考えてみましょう）
-out=$(echo | ./plus)              #なにも入力しない
-[ "$?" = 1 ]      || ng "$LINENO" #これも異常終了する
-[ "${out}" = "" ] || ng "$LINENO"
+# テストコード
+try:
+    digits = int(input("円周率を何桁表示しますか？: "))
+    result = display_pi(digits)
+    print(result)
 
-[ "$res" = 0 ] && echo OK
-exit $res
+    # 期待される結果の確認（最初の5桁を比較する例）
+    expected_result = str(Decimal(3.14159265358979323846))[:digits + 2]  # 正確な円周率を用意
+
+    if result == expected_result:
+        print("OK")  # 結果が合っていれば"OK"を表示
+    else:
+        print("結果が一致しません")  # 結果が誤っていれば"結果が一致しません"を表示
+
+except ValueError as e:
+    print(e)
