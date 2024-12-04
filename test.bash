@@ -19,13 +19,3 @@ else
 fi
 
 exit $res
-
-# 終了コード
-if [ "$res" -eq 0 ]; then
-    echo "正常"
-else
-    echo "異常"
-fi
-
-
-it $res
