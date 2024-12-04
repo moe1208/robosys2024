@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: 2024 kurisaki moe
 # SPDX-License-Identifier: GPL-3.0-only
 
-res=1
+res=0
 out=$(seq 3 | ./pi)
 
 output=$(python3 -c "
@@ -28,4 +28,4 @@ else
 fi
 
 
-exit $res
+it $res
