@@ -18,7 +18,7 @@ git clone https://github.com/moe1208/robosys2024.git
 
 ## 使用方法
 実行方法の例  
-$./Pi  
+$./pi  
 円周率を何桁表示しますか？：3  
 3.141
 
