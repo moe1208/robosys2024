@@ -27,4 +27,5 @@ else
     echo "異常"
 fi
 
+
 exit $res
