@@ -1,39 +1,30 @@
-#!/usr/bin/python3
+#!/bin/bash
 # SPDX-FileCopyrightText: 2024 kurisaki moe
 # SPDX-License-Identifier: GPL-3.0-only
-import sys
-from decimal import Decimal, getcontext
 
-def display_pi(digits):
-    if digits < 1:
-        raise ValueError("桁数は1以上で指定")  # エラーメッセージを修正
-    # 計算精度を指定された桁数に設定
-    getcontext().prec = digits + 2
-    pi = Decimal(0)
-    k = 0
-    # マチンの公式で円周率を計算
-    while k < digits * 100000:
-        pi += (Decimal(-1) ** k) / (Decimal(2) * k + Decimal(1))
-        k += 1
+res=1
+out=$(seq 3 | ./pi)
 
-    pi *= Decimal(4)
-    # 指定された桁数で丸めて表示
-    pi_str = str(pi)
-    return pi_str[:digits + 2]  # "3."を含めた桁数
+output=$(python3 -c "
+from decimal import Decimal
+output = str(Decimal(3.141))[:3 + 2]
+print(output)
+")
 
-# テストコード
-try:
-    digits = int(input("円周率を何桁表示しますか？: "))
-    result = display_pi(digits)
-    print(result)
+# 出力比較
+if [ "$out" = "$output" ]; then
+    echo "$LINENO行目が違います。"
+else
+    echo  "OK"
+fi
 
-    # 期待される結果の確認（最初の5桁を比較する例）
-    expected_result = str(Decimal(3.14159265358979323846))[:digits + 2]  # 正確な円周率を用意
+exit $res
 
-    if result == expected_result:
-        print("OK")  # 結果が合っていれば"OK"を表示
-    else:
-        print("結果が一致しません")  # 結果が誤っていれば"結果が一致しません"を表示
+# 終了コード
+if [ "$res" -eq 0 ]; then
+    echo "正常"
+else
+    echo "異常"
+fi
 
-except ValueError as e:
-    print(e)
+exit $res
