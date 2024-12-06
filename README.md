@@ -4,7 +4,6 @@
 ## plusコマンド
 ![test](https://github.com/moe1208/robosys2024/actions/workflows/test.yml/badge.svg)
 
-
 ## 概要
 - マチンの公式を使って円周率の計算をする。
 - 円周率は、円周の長さが直径の何倍なのかを表す。
