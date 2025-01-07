@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # SPDX-FileCopyrightText: 2024 kurisaki moe
 # SPDX-License-Identifier: GPL-3.0-only
-import sys
 from decimal import Decimal, getcontext
 
 def arctan(x, terms):
@@ -14,11 +13,10 @@ def arctan(x, terms):
         power *= x * x  # x^2を次の項にかける
     return result
 
-def display_pi(digits):
-    if digits < 1:
-        raise ValueError("桁数は1以上で指定")
+def display_pi_fixed():
+    digits = 3  # 桁数を3に固定
 
-    # 計算精度を指定された桁数に設定
+    # 計算精度を設定
     getcontext().prec = digits + 2  # 丸め誤差を防ぐために余分に計算
     terms = digits * 10  # 計算の精度を決めるための項数（調整可能）
 
@@ -34,10 +32,7 @@ def display_pi(digits):
 # 使用例
 if __name__ == "__main__":
     try:
-        sys.stderr.write("円周率を何桁表示しますか？：")
-        input_data = sys.stdin.read().strip()
-        digits = int(input_data)
-        result = display_pi(digits)
+        result = display_pi_fixed()
         print(result)
     except ValueError as e:
         sys.stderr.write(f"エラー: {e}\n")

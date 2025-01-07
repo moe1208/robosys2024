@@ -16,29 +16,25 @@ def arctan(x, terms):
 
 def display_pi(digits):
     if digits < 1:
-        raise ValueError("桁数は1以上で指定してください")
-
+        raise ValueError("桁数は1以上で指定")
+    
     # 計算精度を指定された桁数に設定
     getcontext().prec = digits + 2  # 丸め誤差を防ぐために余分に計算
     terms = digits * 10  # 計算の精度を決めるための項数（調整可能）
-
+    
     # マチンの公式を使用して円周率を計算
     arctan_1_5 = arctan(Decimal(1) / 5, terms)
     arctan_1_239 = arctan(Decimal(1) / 239, terms)
-
+    
     pi = Decimal(16) * arctan_1_5 - Decimal(4) * arctan_1_239
-
-    # 指定された桁数で丸めて返す
+    
+    # 指定された桁数で丸めて表示
     return str(pi)[:digits + 2]  # "3."を含めて桁数がdigits+2になるようにする
 
+# 使用例
 if __name__ == "__main__":
     try:
-        if len(sys.argv) != 2:
-            raise ValueError("使用方法: ./pi <桁数>")
-        
-        # コマンドライン引数から桁数を取得
-        digits = int(sys.argv[1])
-        result = display_pi(digits)
-        print(f"円周率 (小数点以下{digits}桁): {result}")
+        digits = int(input("円周率を何桁表示しますか？："))
+        print(display_pi(digits))
     except ValueError as e:
-        print(f"エラー: {e}")
+        print(e)
