@@ -16,7 +16,7 @@ git clone https://github.com/moe1208/robosys2024.git
 ディレクトリに移動
 cd robosys2024  
 
-実行方法の例
+実行例
 ```  
 $ ./pi 3
 円周率 (小数点以下3桁): 3.141
