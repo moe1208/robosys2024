@@ -11,9 +11,9 @@
 
 
 ## 使用方法
-・リポジトリをクローン
+・リポジトリをクローン  
 git clone https://github.com/moe1208/robosys2024.git  
-・ディレクトリに移動
+・ディレクトリに移動  
 cd robosys2024  
 
 ・実行例  
