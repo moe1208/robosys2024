@@ -12,9 +12,9 @@
 
 ## 使用方法
 リポジトリをクローン
-git clone https://github.com/moe1208/robosys2024.git
+git clone https://github.com/moe1208/robosys2024.git  
 ディレクトリに移動
-cd robosys2024
+cd robosys2024  
 
 実行方法の例
 ```  
